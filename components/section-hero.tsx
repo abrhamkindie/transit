@@ -5,56 +5,50 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 export default function SectionHero() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  const [m, setM] = useState(false);
+  useEffect(() => setM(true), []);
 
   return (
-    <section className="relative min-h-[85vh] flex items-center overflow-hidden bg-dark-bg">
-      <div className="absolute inset-0">
-        <img
-          src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1920&q=80"
-          alt="Cargo ship at port"
-          className="h-full w-full object-cover opacity-30"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-dark-bg via-dark-bg/90 to-dark-bg/60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-dark-bg via-transparent to-dark-bg/50" />
+    <section className="relative overflow-hidden bg-gradient-to-br from-primary-50 via-white to-primary-50">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-accent/10 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-32 sm:px-6 sm:pt-40 lg:px-8">
-        <div className="max-w-3xl">
-          <div className={`inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs text-primary-light transition-all duration-500 ${mounted ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
-            <span className="h-1.5 w-1.5 rounded-full bg-primary-light animate-pulse-glow" />
+      <div className="relative mx-auto max-w-6xl px-4 pb-20 pt-28 sm:px-6 sm:pt-36">
+        <div className="max-w-2xl">
+          <div className={`inline-flex items-center gap-1.5 rounded-full border border-primary/20 bg-primary-50 px-3 py-1 text-xs text-primary transition-all duration-500 ${m ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"}`}>
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
             Trusted Customs Clearance Partner
           </div>
 
-          <h1 className={`mt-5 text-4xl font-bold leading-tight text-white transition-all delay-150 duration-500 sm:text-5xl sm:leading-tight lg:text-6xl ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
-            Seamless <span className="text-primary-light">Customs Clearance</span> &amp; Global{" "}
-            <span className="text-primary-light">Transit Solutions</span>
+          <h1 className={`mt-5 text-4xl font-bold leading-tight text-foreground transition-all delay-150 duration-500 sm:text-5xl sm:leading-tight lg:text-6xl ${m ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
+            Seamless <span className="text-primary">Customs Clearance</span> &amp; Global{" "}
+            <span className="text-primary">Transit Solutions</span>
           </h1>
 
-          <p className={`mt-4 max-w-xl text-sm leading-relaxed text-white/50 transition-all delay-300 duration-500 sm:text-base ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
+          <p className={`mt-4 max-w-lg text-base leading-relaxed text-muted transition-all delay-300 duration-500 ${m ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
             We handle all customs formalities, transit documentation, and logistics — so your goods move across borders without delays.
           </p>
 
-          <div className={`mt-8 flex flex-col items-start gap-3 transition-all delay-450 duration-500 sm:flex-row ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
-            <Link href="/contact" className="inline-flex h-10 items-center justify-center gap-1.5 rounded-md bg-primary px-5 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-dark active:scale-95">
-              Get a Free Quote
-              <ArrowRight className="h-3.5 w-3.5" />
+          <div className={`mt-8 flex flex-col items-start gap-3 transition-all delay-450 duration-500 sm:flex-row ${m ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
+            <Link href="/contact" className="inline-flex h-10 items-center justify-center gap-1.5 rounded-md bg-accent px-5 text-sm font-medium text-white shadow-sm transition-all hover:bg-accent-dark active:scale-95">
+              Get a Free Quote <ArrowRight className="h-3.5 w-3.5" />
             </Link>
-            <Link href="/services" className="inline-flex h-10 items-center justify-center gap-1.5 rounded-md border border-white/20 px-5 text-sm font-medium text-white/70 transition-all hover:bg-white/10 hover:text-white active:scale-95">
+            <Link href="/services" className="inline-flex h-10 items-center justify-center gap-1.5 rounded-md border border-border px-5 text-sm font-medium text-muted transition-all hover:border-primary/30 hover:text-primary active:scale-95">
               Explore Services
             </Link>
           </div>
 
-          <div className={`mt-12 grid grid-cols-3 gap-6 border-t border-white/10 pt-8 transition-all delay-700 duration-500 ${mounted ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
+          <div className={`mt-12 flex items-center gap-8 border-t border-border pt-8 transition-all delay-700 duration-500 ${m ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}>
             {[
               { value: "15+", label: "Years Experience" },
               { value: "5K+", label: "Shipments Cleared" },
               { value: "98%", label: "On-Time Delivery" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-xl font-bold text-primary-light sm:text-2xl">{stat.value}</div>
-                <div className="mt-0.5 text-xs text-white/40">{stat.label}</div>
+            ].map((s) => (
+              <div key={s.label}>
+                <div className="text-xl font-bold text-primary sm:text-2xl">{s.value}</div>
+                <div className="text-xs text-muted">{s.label}</div>
               </div>
             ))}
           </div>

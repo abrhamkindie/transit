@@ -11,7 +11,6 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 export const metadata: Metadata = {
   title: "NexTransit | Global Customs Clearance & Logistics Solutions",
   description: "Your trusted partner for international customs clearance, transit documentation, and freight logistics.",
-  keywords: ["customs clearance", "transit", "logistics", "freight forwarding", "gumruke", "import export", "T1 T2 TIR"],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
