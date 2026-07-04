@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Phone } from "lucide-react";
 
 const services = [
   { title: "Customs Clearance", href: "/services/customs-clearance" },
@@ -24,22 +24,27 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-500 ${
+      className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "glass-strong shadow-sm border-b border-border"
-          : "bg-transparent border-b border-transparent"
+          ? "border-b border-border bg-white/95 shadow-sm backdrop-blur-xl"
+          : "border-b border-white/10 bg-white/85 backdrop-blur-md"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="relative text-lg font-bold text-foreground tracking-tight">
+      <div className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-4 sm:px-6">
+        <Link href="/" className="group flex items-center gap-3">
+          <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-sm font-bold text-white shadow-sm shadow-primary/25">
+            NT
+          </span>
+          <span className="relative text-lg font-bold tracking-tight text-foreground">
             Nex<span className="text-primary">Transit</span>
-            <span className="absolute -bottom-0.5 left-0 h-0.5 w-0 bg-primary transition-all duration-500 group-hover:w-full" />
+            <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-muted">
+              Customs & Logistics
+            </span>
           </span>
         </Link>
 
         <nav className="hidden items-center gap-0.5 md:flex">
-          <Link href="/" className="rounded-lg px-3.5 py-2 text-sm font-medium text-muted transition-all hover:bg-primary-50 hover:text-primary">
+          <Link href="/" className="rounded-md px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary">
             Home
           </Link>
           <div
@@ -48,7 +53,7 @@ export default function Header() {
             onMouseLeave={() => setDrop(false)}
           >
             <button
-              className="flex items-center gap-1 rounded-lg px-3.5 py-2 text-sm font-medium text-muted transition-all hover:bg-primary-50 hover:text-primary"
+              className="flex items-center gap-1 rounded-md px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary"
               onClick={() => setDrop(!drop)}
               aria-expanded={drop}
             >
@@ -60,47 +65,53 @@ export default function Header() {
               />
             </button>
             {drop && (
-              <div className="absolute left-0 top-full mt-1.5 w-52 rounded-xl border border-border bg-white p-1.5 shadow-elevated animate-scale-in">
+              <div className="absolute left-0 top-full mt-2 w-60 rounded-lg border border-border bg-white p-2 shadow-elevated animate-scale-in">
                 {services.map((s) => (
                   <Link
                     key={s.href}
                     href={s.href}
-                    className="group flex items-center gap-2.5 rounded-lg px-3.5 py-2.5 text-sm text-muted transition-all hover:bg-primary-50 hover:text-primary"
+                    className="group flex items-center gap-3 rounded-md px-3.5 py-3 text-sm text-muted transition-colors hover:bg-primary-50 hover:text-primary"
                   >
-                    <span className="h-1.5 w-1.5 rounded-full bg-primary-200 transition-all group-hover:bg-primary group-hover:w-3" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary transition-all group-hover:w-3" />
                     {s.title}
                   </Link>
                 ))}
               </div>
             )}
           </div>
-          <Link href="/about" className="rounded-lg px-3.5 py-2 text-sm font-medium text-muted transition-all hover:bg-primary-50 hover:text-primary">
+          <Link href="/about" className="rounded-md px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary">
             About
           </Link>
-          <Link href="/tracking" className="rounded-lg px-3.5 py-2 text-sm font-medium text-muted transition-all hover:bg-primary-50 hover:text-primary">
+          <Link href="/tracking" className="rounded-md px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary">
             Tracking
           </Link>
-          <Link href="/faq" className="rounded-lg px-3.5 py-2 text-sm font-medium text-muted transition-all hover:bg-primary-50 hover:text-primary">
+          <Link href="/faq" className="rounded-md px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary">
             FAQ
           </Link>
-          <Link href="/contact" className="rounded-lg px-3.5 py-2 text-sm font-medium text-muted transition-all hover:bg-primary-50 hover:text-primary">
+          <Link href="/contact" className="rounded-md px-3.5 py-2 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary">
             Contact
           </Link>
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <a
+            href="tel:+251911234567"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-border bg-white px-4 text-sm font-semibold text-foreground transition-colors hover:border-primary/30 hover:text-primary"
+          >
+            <Phone className="h-4 w-4 text-primary" />
+            +251 911 234 567
+          </a>
           <Link
             href="/contact"
-            className="relative inline-flex h-9 items-center justify-center rounded-lg bg-primary px-5 text-sm font-medium text-white transition-all hover:bg-primary-dark active:scale-95 shadow-sm overflow-hidden group"
+            className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark active:scale-95"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            <span className="relative">Get a Quote</span>
+            Get a Quote
           </Link>
         </div>
 
         <button
           onClick={() => setOpen(!open)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted transition-colors hover:bg-primary-50 hover:text-primary md:hidden"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border bg-white text-muted transition-colors hover:bg-primary-50 hover:text-primary md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -118,17 +129,17 @@ export default function Header() {
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary"
+              className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-primary-200" />
+              <span className="h-1.5 w-1.5 rounded-full bg-primary-100" />
               Home
             </Link>
             <button
               onClick={() => setMobSvc(!mobSvc)}
-              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary"
+              className="flex items-center justify-between rounded-md px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary"
             >
               <span className="flex items-center gap-3">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary-200" />
+                <span className="h-1.5 w-1.5 rounded-full bg-primary-100" />
                 Services
               </span>
               <ChevronDown
@@ -142,13 +153,13 @@ export default function Header() {
                 mobSvc ? "max-h-60" : "max-h-0"
               }`}
             >
-              <div className="ml-7 border-l-2 border-primary-200 pl-4 space-y-0.5 pt-1 pb-1">
+              <div className="ml-7 border-l-2 border-primary-100 pl-4 space-y-0.5 pt-1 pb-1">
                 {services.map((s) => (
                   <Link
                     key={s.href}
                     href={s.href}
                     onClick={() => setOpen(false)}
-                    className="block rounded-lg px-3 py-2 text-sm text-muted transition-colors hover:text-primary"
+                    className="block rounded-md px-3 py-2 text-sm text-muted transition-colors hover:text-primary"
                   >
                     {s.title}
                   </Link>
@@ -165,9 +176,9 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setOpen(false)}
-                className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary"
+                className="flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-muted transition-colors hover:bg-primary-50 hover:text-primary"
               >
-                <span className="h-1.5 w-1.5 rounded-full bg-primary-200" />
+                <span className="h-1.5 w-1.5 rounded-full bg-primary-100" />
                 {link.label}
               </Link>
             ))}
@@ -175,7 +186,7 @@ export default function Header() {
               <Link
                 href="/contact"
                 onClick={() => setOpen(false)}
-                className="flex items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition-all hover:bg-primary-dark active:scale-[0.98] shadow-sm"
+                className="flex items-center justify-center rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-primary-dark active:scale-[0.98]"
               >
                 Get a Free Quote
               </Link>

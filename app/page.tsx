@@ -12,7 +12,7 @@ import SectionCta from "@/components/section-cta";
 
 export default function Home() {
   return (
-    <>
+    <div className="home-redesign">
       <SectionHero />
       <SectionPartners />
       <SectionServices />
@@ -24,6 +24,6 @@ export default function Home() {
       <SectionBlogPreview />
       <SectionFaq />
       <SectionCta />
-    </>
+    </div>
   );
 }

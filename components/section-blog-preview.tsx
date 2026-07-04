@@ -1,22 +1,21 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Calendar, Clock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import ScrollReveal from "./scroll-reveal";
-import { useScrollReveal } from "@/lib/utils";
 
 const articles = [
   {
     title: "Understanding T1 Transit Documentation",
     excerpt: "A complete guide to T1 customs transit procedures and how they simplify cross-border trade.",
-    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=900&q=80",
     date: "Jun 15, 2026",
     readTime: "5 min read",
     href: "/blog",
   },
   {
     title: "Top 5 Customs Clearance Mistakes",
-    excerpt: "Avoid these common pitfalls that cause delays and extra costs in international shipping.",
+    excerpt: "Avoid common paperwork and submission issues that cause delays and extra costs.",
     image: "https://images.unsplash.com/photo-1567427017947-545c5f8d16ad?w=600&q=80",
     date: "Jun 8, 2026",
     readTime: "4 min read",
@@ -24,7 +23,7 @@ const articles = [
   },
   {
     title: "East Africa Trade Route Guide",
-    excerpt: "Key insights into the major trade corridors connecting East Africa to global markets.",
+    excerpt: "Key insights into the trade corridors connecting East Africa to global markets.",
     image: "https://images.unsplash.com/photo-1488998427799-e3362cec87c3?w=600&q=80",
     date: "May 28, 2026",
     readTime: "6 min read",
@@ -32,83 +31,65 @@ const articles = [
   },
 ];
 
-function StaggerGrid({ children }: { children: React.ReactNode }) {
-  const { ref, revealed } = useScrollReveal();
-  return (
-    <div ref={ref} className={`stagger-children mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ${revealed ? "revealed" : ""}`}>
-      {children}
-    </div>
-  );
-}
-
 export default function SectionBlogPreview() {
   return (
-    <section className="relative section-gradient-alt py-20 sm:py-24 overflow-hidden">
-      <div className="section-transition" />
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-24 top-1/4 h-80 w-80 rounded-full bg-primary/[0.03] blur-3xl" />
-        <div className="absolute -left-24 bottom-1/4 h-56 w-56 rounded-full bg-primary/[0.03] blur-3xl" />
-      </div>
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+    <section className="bg-white py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <ScrollReveal>
-          <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+          <div className="flex flex-col gap-5 border-b border-border pb-10 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <span className="text-eyebrow">Latest Insights</span>
-              <h2 className="mt-4 text-3xl font-bold text-foreground sm:text-4xl tracking-tight">
-                From Our <span className="text-gradient">Blog</span>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+                Insights
+              </p>
+              <h2 className="mt-4 max-w-3xl text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
+                Practical guidance for customs and logistics teams.
               </h2>
-              <p className="mt-2 text-base text-muted">Industry insights, guides, and updates from our team.</p>
             </div>
             <Link
               href="/blog"
-              className="group inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-white transition-all hover:bg-primary-dark hover:shadow-md active:scale-95 shrink-0"
+              className="inline-flex h-11 w-fit items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark active:scale-95"
             >
-              View All Articles
-              <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+              View Articles
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </ScrollReveal>
 
-        <StaggerGrid>
-          {articles.map((a) => (
-            <Link
-              key={a.title}
-              href={a.href}
-              className="group block rounded-xl border border-border bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 overflow-hidden"
-            >
-              <div className="overflow-hidden aspect-[16/9]">
-                <img
-                  src={a.image}
-                  alt={a.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-[0.5deg]"
-                />
-              </div>
-              <div className="p-5">
-                <div className="flex items-center gap-3 text-xs text-muted">
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5 text-primary" />
-                    {a.date}
+        <div className="mt-10 grid gap-10 lg:grid-cols-[0.82fr_1.18fr]">
+          <ScrollReveal variant="left">
+            <img
+              src={articles[0].image}
+              alt={articles[0].title}
+              loading="lazy"
+              className="aspect-[4/5] w-full object-cover"
+            />
+          </ScrollReveal>
+
+          <div className="border-y border-border">
+            {articles.map((article) => (
+              <ScrollReveal key={article.title} variant="right" threshold={0.1}>
+                <Link
+                  href={article.href}
+                  className="group grid gap-4 border-b border-border py-7 last:border-b-0 sm:grid-cols-[8rem_1fr_auto] sm:items-start"
+                >
+                  <div className="text-sm text-muted">
+                    <div>{article.date}</div>
+                    <div className="mt-1">{article.readTime}</div>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-semibold leading-tight text-foreground transition-colors group-hover:text-primary">
+                      {article.title}
+                    </h3>
+                    <p className="mt-3 max-w-xl text-sm leading-6 text-muted">{article.excerpt}</p>
+                  </div>
+                  <span className="hidden h-10 w-10 items-center justify-center rounded-full border border-border text-primary transition-colors group-hover:border-primary group-hover:bg-primary group-hover:text-white sm:inline-flex">
+                    <ArrowRight className="h-4 w-4" />
                   </span>
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="h-3.5 w-3.5 text-primary" />
-                    {a.readTime}
-                  </span>
-                </div>
-                <h3 className="mt-3 text-sm font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">
-                  {a.title}
-                </h3>
-                <p className="mt-1.5 text-xs leading-relaxed text-muted">
-                  {a.excerpt}
-                </p>
-                <div className="mt-4 flex items-center gap-1 text-xs font-medium text-primary opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                  Read more
-                  <ArrowRight className="h-3 w-3" />
-                </div>
-              </div>
-            </Link>
-          ))}
-        </StaggerGrid>
+                </Link>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

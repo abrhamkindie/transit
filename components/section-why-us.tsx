@@ -1,95 +1,91 @@
 "use client";
 
-import { ShieldCheck, Clock, HeadphonesIcon, FileText, Globe, BarChart3, ArrowRight } from "lucide-react";
+import { BarChart3, Clock, FileText, Globe, HeadphonesIcon, ShieldCheck } from "lucide-react";
 import ScrollReveal from "./scroll-reveal";
 
 const features = [
-  { icon: ShieldCheck, title: "Full Customs Compliance", desc: "100% regulatory compliance eliminating penalties or delays." },
-  { icon: Clock, title: "Fast Turnaround", desc: "Your cargo clears customs in record time." },
-  { icon: HeadphonesIcon, title: "24/7 Support", desc: "A personal account manager available around the clock." },
-  { icon: FileText, title: "Paperwork Managed", desc: "We handle every document from invoices to declarations." },
-  { icon: Globe, title: "Global Network", desc: "Partners across Africa, Middle East, Europe, and Asia." },
-  { icon: BarChart3, title: "Real-Time Tracking", desc: "Monitor your shipment through our online portal." },
+  {
+    icon: ShieldCheck,
+    title: "Compliance-first handling",
+    desc: "Declarations, permits, duties, and inspections are managed with documented controls.",
+  },
+  {
+    icon: Clock,
+    title: "Fast issue escalation",
+    desc: "Port, border, and customs queries are escalated before they become avoidable delays.",
+  },
+  {
+    icon: HeadphonesIcon,
+    title: "Single point of contact",
+    desc: "Shipment owners, finance teams, and consignees stay aligned through one account manager.",
+  },
+  {
+    icon: FileText,
+    title: "Paperwork discipline",
+    desc: "Invoices, origin documents, packing lists, and transit files are checked before submission.",
+  },
+  {
+    icon: Globe,
+    title: "Corridor coverage",
+    desc: "Partner networks support shipments across East Africa, the Middle East, Europe, and Asia.",
+  },
+  {
+    icon: BarChart3,
+    title: "Trackable milestones",
+    desc: "Status updates are tied to real clearance, release, transport, and delivery events.",
+  },
 ];
 
 export default function SectionWhyUs() {
   return (
-    <section className="relative bg-surface py-20 sm:py-24 overflow-hidden" id="why-us">
-      <div className="section-transition" />
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-primary/[0.03] blur-3xl" />
-        <div className="absolute -right-24 bottom-1/4 h-64 w-64 rounded-full bg-primary/[0.03] blur-3xl" />
-      </div>
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid items-center gap-14 lg:grid-cols-2">
-          {/* Left: Content */}
-          <div>
-            <ScrollReveal variant="left">
-              <span className="text-eyebrow">Why Choose Us</span>
-              <h2 className="mt-4 text-3xl font-bold text-foreground sm:text-4xl tracking-tight">
-                We Make Cross-Border Trade{" "}
-                <span className="text-gradient">Simple &amp; Reliable</span>
-              </h2>
-              <p className="mt-3 text-base text-muted leading-relaxed max-w-md">
-                With years of experience and a dedicated team, we take the complexity
-                out of international shipping so you can focus on growing your business.
+    <section className="bg-surface py-20 sm:py-24" id="why-us">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid gap-12 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+          <ScrollReveal variant="left">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+                Why NexTransit
               </p>
-            </ScrollReveal>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {features.map((f, i) => (
-                <ScrollReveal key={f.title} variant="up" threshold={0.1}>
-                  <div className="group flex gap-4 rounded-xl border border-border bg-white p-5 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:-translate-y-1">
-                    <div className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:shadow-md">
-                      <f.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-semibold text-foreground">{f.title}</h4>
-                      <p className="mt-0.5 text-xs text-muted leading-relaxed">{f.desc}</p>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
+              <h2 className="mt-4 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
+                Practical customs expertise, coordinated with real freight movement.
+              </h2>
+              <p className="mt-5 max-w-2xl text-base leading-7 text-muted">
+                NexTransit is structured for shippers who need documents checked early,
+                clearance problems handled quickly, and transport updates that match what is
+                happening on the ground.
+              </p>
 
-          {/* Right: Image Grid */}
-          <ScrollReveal variant="right">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="group overflow-hidden rounded-xl shadow-md">
-                  <img
-                    src="https://images.unsplash.com/photo-1554774853-719586f82d77?w=600&q=85"
-                    alt="Customs documentation being reviewed by a professional"
-                    loading="lazy"
-                    className="h-48 w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-[1deg]"
-                  />
-                </div>
-                <div className="group overflow-hidden rounded-xl shadow-md">
-                  <img
-                    src="https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=600&q=85"
-                    alt="Logistics planning and route mapping"
-                    loading="lazy"
-                    className="h-36 w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-[-1deg]"
-                  />
-                </div>
+              <div className="mt-10 border-y border-border">
+                {features.map((feature) => (
+                  <ScrollReveal key={feature.title} variant="up" threshold={0.1}>
+                    <div className="grid gap-4 border-b border-border py-5 last:border-b-0 sm:grid-cols-[2rem_1fr]">
+                      <feature.icon className="h-5 w-5 text-primary" />
+                      <div>
+                        <h3 className="text-lg font-semibold text-foreground">{feature.title}</h3>
+                        <p className="mt-1.5 text-sm leading-6 text-muted">{feature.desc}</p>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                ))}
               </div>
-              <div className="space-y-4 pt-8">
-                <div className="group overflow-hidden rounded-xl shadow-md">
-                  <img
-                    src="https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=600&q=85"
-                    alt="Shipping containers stacked at a terminal"
-                    loading="lazy"
-                    className="h-36 w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-[1deg]"
-                  />
-                </div>
-                <div className="group overflow-hidden rounded-xl shadow-md">
-                  <img
-                    src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=85"
-                    alt="Cargo truck on delivery route"
-                    loading="lazy"
-                    className="h-48 w-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-[-1deg]"
-                  />
-                </div>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal variant="right">
+            <div className="lg:pt-12">
+              <img
+                src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=900&q=85"
+                alt="Freight warehouse with organized cargo and logistics operations"
+                loading="lazy"
+                className="aspect-[4/5] w-full object-cover"
+              />
+              <div className="mt-6 border-l-4 border-accent pl-5">
+                <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">
+                  Operating Standard
+                </p>
+                <p className="mt-2 text-xl font-semibold leading-7 text-foreground">
+                  Documents verified before submission. Milestones tracked after release.
+                </p>
               </div>
             </div>
           </ScrollReveal>

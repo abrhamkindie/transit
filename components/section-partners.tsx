@@ -1,48 +1,48 @@
 "use client";
 
-import { Truck, Building2, Package, Container, Globe2, Anchor } from "lucide-react";
+import { Anchor, Building2, Container, Globe2, ShieldCheck, Truck } from "lucide-react";
 import ScrollReveal from "./scroll-reveal";
 
-const partners = [
-  { name: "Ethiopian Shipping", icon: Anchor },
-  { name: "Djibouti Port Auth", icon: Container },
-  { name: "East Africa Logistics", icon: Truck },
-  { name: "Global Trade Network", icon: Globe2 },
-  { name: "Transit Solutions", icon: Package },
-  { name: "Horn of Africa Logistics", icon: Building2 },
+const network = [
+  { name: "Port handoff", icon: Anchor },
+  { name: "Container release", icon: Container },
+  { name: "Road freight", icon: Truck },
+  { name: "Agent network", icon: Globe2 },
+  { name: "Compliance desk", icon: ShieldCheck },
+  { name: "Regional offices", icon: Building2 },
 ];
 
 export default function SectionPartners() {
   return (
-    <section className="relative overflow-hidden border-t border-border section-gradient-primary">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/4 top-0 h-40 w-40 rounded-full bg-primary/8 blur-3xl" />
-        <div className="absolute right-1/4 bottom-0 h-32 w-32 rounded-full bg-primary/5 blur-3xl" />
-      </div>
-      <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <ScrollReveal>
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.15em] text-muted">
-            Trusted by Industry Leaders
-          </p>
-        </ScrollReveal>
-        <ScrollReveal variant="up" threshold={0.1}>
-          <div className="mt-8 grid grid-cols-3 gap-4 md:grid-cols-6">
-            {partners.map((p, i) => (
-              <div
-                key={p.name}
-                className="group flex flex-col items-center gap-3 rounded-xl border border-border/60 bg-white/80 backdrop-blur-sm px-3 py-6 transition-all hover:border-primary/30 hover:shadow-lg hover:-translate-y-1.5 hover:bg-white"
-                style={{ transitionDelay: `${i * 40}ms` }}
-              >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary-50 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:shadow-md group-hover:shadow-primary/20">
-                  <p.icon className="h-5 w-5" />
+    <section className="border-y border-border bg-white">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid gap-8 py-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-center">
+          <ScrollReveal>
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">
+                Operating network
+              </p>
+              <p className="mt-3 max-w-sm text-sm leading-6 text-muted">
+                Connected across the port, customs, road freight, and regional office points
+                that keep shipments moving.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal variant="up" threshold={0.1}>
+            <div className="grid border-t border-border sm:grid-cols-3 sm:border-l sm:border-t-0">
+              {network.map((item) => (
+                <div
+                  key={item.name}
+                  className="flex items-center gap-3 border-b border-border py-4 sm:border-r sm:px-5"
+                >
+                  <item.icon className="h-5 w-5 shrink-0 text-primary" />
+                  <span className="text-sm font-semibold text-foreground">{item.name}</span>
                 </div>
-                <span className="text-xs font-medium text-muted text-center leading-tight transition-colors duration-300 group-hover:text-foreground">
-                  {p.name}
-                </span>
-              </div>
-            ))}
-          </div>
-        </ScrollReveal>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );
