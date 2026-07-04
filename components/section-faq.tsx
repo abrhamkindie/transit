@@ -17,24 +17,33 @@ const faqs = [
 export default function SectionFaq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="bg-surface py-16 sm:py-20" id="faq">
+    <section className="relative bg-surface border-t border-border py-16 sm:py-20" id="faq">
+      <div className="section-divider" />
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-2">
           <ScrollReveal variant="left">
             <span className="inline-block rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">FAQ</span>
             <h2 className="mt-3 text-2xl font-bold text-foreground sm:text-3xl">Frequently Asked Questions</h2>
             <p className="mt-2 text-sm text-muted">Have questions? Find answers below.</p>
-            <Link href="/faq" className="mt-4 inline-flex h-8 items-center justify-center rounded-md bg-primary px-3 text-sm font-medium text-white hover:bg-primary-dark">View All FAQs</Link>
+            <Link href="/faq" className="mt-4 inline-flex h-9 items-center justify-center gap-1 rounded-md bg-primary px-4 text-sm font-medium text-white transition-all hover:bg-primary-dark active:scale-95 shadow-sm">View All FAQs</Link>
           </ScrollReveal>
           <ScrollReveal variant="right">
             <div className="space-y-2">
               {faqs.map((faq, i) => (
-                <div key={i} className={`rounded-lg border transition-all ${open === i ? "border-primary/30 bg-white" : "border-border bg-white hover:border-primary/20"}`}>
-                  <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left">
+                <div key={i} className={`rounded-lg border transition-all duration-300 ${open === i ? "border-primary/30 bg-white shadow-sm" : "border-border bg-surface hover:border-primary/20 hover:shadow-sm"}`}>
+                  <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left">
                     <span className="text-sm text-foreground">{faq.q}</span>
-                    <div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded transition-all ${open === i ? "bg-primary text-white" : "bg-primary-50 text-primary"}`}>{open === i ? <Minus className="h-3 w-3" /> : <Plus className="h-3 w-3" />}</div>
+                    <div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded transition-all duration-300 ${open === i ? "bg-primary text-white rotate-0" : "bg-primary-50 text-primary"}`}>
+                      {open === i ? <Minus className="h-3 w-3" /> : <Plus className="h-3 w-3" />}
+                    </div>
                   </button>
-                  {open === i && <div className="px-4 pb-3"><p className="text-sm text-muted">{faq.a}</p></div>}
+                  {open === i && (
+                    <div className="overflow-hidden animate-fade-in-up">
+                      <div className="px-4 pb-4">
+                        <p className="text-sm text-muted">{faq.a}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

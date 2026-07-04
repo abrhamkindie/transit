@@ -6,6 +6,7 @@ import SectionStats from "@/components/section-stats";
 import SectionWhyUs from "@/components/section-why-us";
 import SectionCoverage from "@/components/section-coverage";
 import SectionTestimonials from "@/components/section-testimonials";
+import SectionBlogPreview from "@/components/section-blog-preview";
 import SectionFaq from "@/components/section-faq";
 import SectionCta from "@/components/section-cta";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <SectionWhyUs />
       <SectionCoverage />
       <SectionTestimonials />
+      <SectionBlogPreview />
       <SectionFaq />
       <SectionCta />
     </>
