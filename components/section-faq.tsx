@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, ArrowRight } from "lucide-react";
 import ScrollReveal from "./scroll-reveal";
 
 const faqs = [
@@ -17,37 +17,70 @@ const faqs = [
 export default function SectionFaq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="relative bg-white border-t border-border py-16 sm:py-20 overflow-hidden" id="faq">
+    <section className="relative bg-white py-20 sm:py-24 overflow-hidden" id="faq">
+      <div className="section-transition" />
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-1/3 h-64 w-64 rounded-full bg-primary/[0.03] blur-3xl" />
-        <div className="absolute -right-24 bottom-1/4 h-48 w-48 rounded-full bg-primary/[0.03] blur-3xl" />
+        <div className="absolute -left-32 top-1/3 h-80 w-80 rounded-full bg-primary/[0.03] blur-3xl" />
+        <div className="absolute -right-32 bottom-1/4 h-56 w-56 rounded-full bg-primary/[0.03] blur-3xl" />
       </div>
-      <div className="section-divider" />
-      <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
-        <div className="grid gap-10 lg:grid-cols-2">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid gap-12 lg:grid-cols-2">
           <ScrollReveal variant="left">
-            <span className="inline-block rounded-full bg-primary-50 border border-primary-100 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-primary">FAQ</span>
-            <h2 className="mt-4 text-2xl font-bold text-foreground sm:text-3xl">Frequently Asked Questions</h2>
-            <p className="mt-2 text-sm text-muted">Have questions? Find answers below.</p>
-            <Link href="/faq" className="mt-4 inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-white transition-all hover:bg-primary-dark hover:shadow-md active:scale-95">View All FAQs</Link>
+            <span className="text-eyebrow">FAQ</span>
+            <h2 className="mt-4 text-3xl font-bold text-foreground sm:text-4xl tracking-tight">
+              Frequently Asked{" "}
+              <span className="text-gradient">Questions</span>
+            </h2>
+            <p className="mt-3 text-base text-muted leading-relaxed max-w-sm">
+              Have questions? Find answers to the most common inquiries below.
+            </p>
+            <Link
+              href="/faq"
+              className="mt-6 inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-primary px-5 text-sm font-medium text-white transition-all hover:bg-primary-dark hover:shadow-md active:scale-95"
+            >
+              View All FAQs
+              <ArrowRight className="h-4 w-4" />
+            </Link>
           </ScrollReveal>
           <ScrollReveal variant="right">
             <div className="space-y-3">
               {faqs.map((faq, i) => (
-                <div key={i} className={`rounded-xl border transition-all duration-300 ${open === i ? "border-primary/30 bg-white shadow-md" : "border-border bg-surface hover:border-primary/20 hover:shadow-sm"}`}>
-                  <button onClick={() => setOpen(open === i ? null : i)} className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left">
+                <div
+                  key={i}
+                  className={`rounded-xl border transition-all duration-300 ${
+                    open === i
+                      ? "border-primary/30 bg-white shadow-md"
+                      : "border-border bg-surface hover:border-primary/20 hover:shadow-sm"
+                  }`}
+                >
+                  <button
+                    onClick={() => setOpen(open === i ? null : i)}
+                    className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left"
+                  >
                     <span className="text-sm font-medium text-foreground">{faq.q}</span>
-                    <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg transition-all duration-300 ${open === i ? "bg-primary text-white shadow-sm rotate-0" : "bg-primary-50 text-primary"}`}>
-                      {open === i ? <Minus className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
+                    <div
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-all duration-300 ${
+                        open === i
+                          ? "bg-primary text-white shadow-sm"
+                          : "bg-primary-50 text-primary"
+                      }`}
+                    >
+                      {open === i ? (
+                        <Minus className="h-3.5 w-3.5" />
+                      ) : (
+                        <Plus className="h-3.5 w-3.5" />
+                      )}
                     </div>
                   </button>
-                  {open === i && (
-                    <div className="overflow-hidden animate-fade-in-up">
-                      <div className="px-5 pb-5">
-                        <p className="text-sm text-muted leading-relaxed">{faq.a}</p>
-                      </div>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      open === i ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <div className="px-5 pb-5">
+                      <p className="text-sm text-muted leading-relaxed">{faq.a}</p>
                     </div>
-                  )}
+                  </div>
                 </div>
               ))}
             </div>

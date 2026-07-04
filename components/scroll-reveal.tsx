@@ -8,12 +8,30 @@ interface Props {
   className?: string;
   variant?: "up" | "left" | "right" | "scale";
   threshold?: number;
-  as?: "div" | "section" | "article";
+  as?: "div" | "section" | "article" | "span";
 }
 
-const v = { up: "reveal", left: "reveal-left", right: "reveal-right", scale: "reveal-scale" };
+const variantClasses = {
+  up: "reveal",
+  left: "reveal-left",
+  right: "reveal-right",
+  scale: "reveal-scale",
+};
 
-export default function ScrollReveal({ children, className = "", variant = "up", threshold, as: Tag = "div" }: Props) {
+export default function ScrollReveal({
+  children,
+  className = "",
+  variant = "up",
+  threshold,
+  as: Tag = "div",
+}: Props) {
   const { ref, revealed } = useScrollReveal({ threshold });
-  return <Tag ref={ref} className={`${v[variant]} ${revealed ? "revealed" : ""} ${className}`}>{children}</Tag>;
+  return (
+    <Tag
+      ref={ref}
+      className={`${variantClasses[variant]} ${revealed ? "revealed" : ""} ${className}`}
+    >
+      {children}
+    </Tag>
+  );
 }
