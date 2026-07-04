@@ -12,10 +12,10 @@ export default function ScrollToTop() {
   }, []);
   return (
     <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Scroll to top"
-      className={`fixed bottom-5 right-5 z-50 flex h-8 w-8 items-center justify-center rounded-md border border-border bg-white text-muted shadow-sm transition-all duration-300 hover:bg-primary-50 hover:text-primary active:scale-90 ${
-        visible ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0 pointer-events-none"
+      className={`fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-white text-muted shadow-lg transition-all duration-300 hover:bg-primary hover:text-white hover:shadow-xl hover:shadow-primary/20 active:scale-90 ${
+        visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0 pointer-events-none"
       }`}>
-      <ArrowUp className="h-3.5 w-3.5" />
+      <ArrowUp className="h-4 w-4" />
     </button>
   );
 }

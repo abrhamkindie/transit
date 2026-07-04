@@ -25,27 +25,31 @@ function StaggerGrid({ children }: { children: React.ReactNode }) {
 
 export default function SectionServices() {
   return (
-    <section className="relative bg-white border-t border-border py-16 sm:py-20" id="services">
+    <section className="relative bg-white border-t border-border py-16 sm:py-20 overflow-hidden" id="services">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-32 top-1/4 h-64 w-64 rounded-full bg-primary/[0.03] blur-3xl" />
+        <div className="absolute -right-32 bottom-1/4 h-48 w-48 rounded-full bg-primary/[0.03] blur-3xl" />
+      </div>
       <div className="section-divider" />
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <ScrollReveal>
           <div className="text-center">
-            <span className="inline-block rounded-full bg-primary-50 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary">What We Offer</span>
-            <h2 className="mt-3 text-2xl font-bold text-foreground sm:text-3xl">Our Services</h2>
+            <span className="inline-block rounded-full bg-primary-50 border border-primary-100 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-primary">What We Offer</span>
+            <h2 className="mt-4 text-2xl font-bold text-foreground sm:text-3xl">Our Services</h2>
             <p className="mt-2 text-sm text-muted max-w-lg mx-auto">End-to-end customs and logistics solutions for your business.</p>
           </div>
         </ScrollReveal>
 
         <StaggerGrid>
           {items.map((s) => (
-            <Link key={s.title} href={s.href} className="group relative block rounded-xl border border-border bg-surface p-6 transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:-translate-y-1">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:shadow-md">
+            <Link key={s.title} href={s.href} className="group relative block rounded-xl border border-border bg-white p-6 transition-all duration-300 hover:border-primary/30 hover:shadow-xl hover:-translate-y-1.5 shadow-sm">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/20">
                 <s.icon className="h-6 w-6" />
               </div>
               <h3 className="mt-4 text-base font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">{s.title}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-muted">{s.desc}</p>
               <div className="mt-4 flex items-center gap-1 text-sm font-medium text-primary opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                Learn more →
+                Learn more <span className="text-lg">→</span>
               </div>
             </Link>
           ))}
@@ -53,8 +57,8 @@ export default function SectionServices() {
 
         <ScrollReveal>
           <div className="mt-10 text-center">
-            <Link href="/services" className="group inline-flex h-10 items-center justify-center gap-1.5 rounded-md border-2 border-primary px-5 text-sm font-medium text-primary transition-all hover:bg-primary hover:text-white active:scale-95">
-              View All Services <span className="transition-transform group-hover:translate-x-0.5">→</span>
+            <Link href="/services" className="group inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-medium text-white shadow-sm transition-all hover:bg-primary-dark hover:shadow-md active:scale-95">
+              View All Services <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
             </Link>
           </div>
         </ScrollReveal>

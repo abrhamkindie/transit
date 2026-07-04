@@ -26,10 +26,14 @@ function StatItem({ icon: Icon, value, suffix, label, index }: { icon: typeof Br
 
 export default function SectionStats() {
   return (
-    <section className="relative bg-white border-t border-border py-16 sm:py-20">
+    <section className="relative section-gradient-primary border-t border-border py-16 sm:py-20 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/3 top-0 h-40 w-40 rounded-full bg-primary/8 blur-3xl" />
+        <div className="absolute right-1/3 bottom-0 h-32 w-32 rounded-full bg-primary/8 blur-3xl" />
+      </div>
       <div className="section-divider" />
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid grid-cols-2 gap-10 lg:grid-cols-4">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="grid grid-cols-2 gap-8 sm:gap-12 lg:grid-cols-4">
           {stats.map((s, i) => <StatItem key={s.label} {...s} index={i} />)}
         </div>
       </div>
