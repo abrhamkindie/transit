@@ -14,70 +14,88 @@ const routes = [
 
 export default function SectionCoverage() {
   return (
-    <section className="bg-white py-20 sm:py-24" id="coverage">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+    <section className="relative overflow-hidden bg-surface py-20 sm:py-24" id="coverage">
+      {/* Decorative background */}
+      <div className="blob-primary -right-40 top-0 h-96 w-96" />
+      <div className="blob-accent -left-40 bottom-0 h-80 w-80" />
+
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <ScrollReveal>
-          <div className="grid gap-8 border-b border-border pb-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-                Coverage
-              </p>
-              <h2 className="mt-4 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
-                East Africa corridor expertise with global forwarding reach.
-              </h2>
-            </div>
-            <p className="max-w-xl text-base leading-7 text-muted lg:justify-self-end">
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="text-eyebrow">Coverage</span>
+            <h2 className="mt-5 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
+              East Africa corridor expertise with global forwarding reach.
+            </h2>
+            <p className="mt-5 text-base leading-7 text-muted">
               Offices and partners support key trade lanes into Ethiopia and the wider region,
               with route planning connected to clearance and delivery requirements.
             </p>
           </div>
         </ScrollReveal>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
-          <ScrollReveal variant="left">
-            <div>
-              <img
-                src="https://images.unsplash.com/photo-1577412647305-991150c7d163?w=900&q=85"
-                alt="Freight route planning and logistics coordination"
-                loading="lazy"
-                className="aspect-[5/4] w-full object-cover"
-              />
-              <div className="mt-6">
-                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <Building2 className="h-4 w-4 text-primary" />
-                  Operating offices
-                </div>
-                <div className="mt-4 flex flex-wrap gap-x-5 gap-y-3">
-                  {offices.map((office) => (
-                    <span key={office} className="inline-flex items-center gap-2 text-sm text-muted">
-                      <MapPin className="h-3.5 w-3.5 text-primary" />
-                      {office}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
+        <div className="mt-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          {/* Route cards */}
+          <div className="space-y-4">
+            {routes.map((route, i) => (
+              <ScrollReveal key={`${route.from}-${route.to}`} variant="left" threshold={0.1}>
+                <div className="card-elevated group relative overflow-hidden p-5 transition-all duration-300">
+                  {/* Left accent bar */}
+                  <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary to-primary-light opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-          <ScrollReveal variant="right">
-            <div className="border-y border-border">
-              {routes.map((route) => (
-                <div
-                  key={`${route.from}-${route.to}`}
-                  className="grid gap-4 border-b border-border py-6 last:border-b-0 sm:grid-cols-[2rem_1fr_8rem] sm:items-center"
-                >
-                  <route.icon className="h-5 w-5 text-primary" />
-                  <div>
-                    <div className="text-xl font-semibold text-foreground">
-                      {route.from} <span className="text-muted">to</span> {route.to}
+                  <div className="flex items-center gap-4">
+                    <div className="icon-glow shrink-0">
+                      <route.icon className="h-5 w-5" />
                     </div>
-                    <div className="mt-1 text-sm text-muted">Via {route.via}</div>
-                  </div>
-                  <div className="text-sm font-semibold uppercase tracking-[0.12em] text-primary">
-                    {route.mode}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 text-lg font-semibold text-foreground">
+                        <span>{route.from}</span>
+                        <span className="text-xs text-muted-light">→</span>
+                        <span>{route.to}</span>
+                      </div>
+                      <div className="mt-1 flex items-center gap-3 text-sm text-muted">
+                        <span>Via {route.via}</span>
+                        <span className="h-1 w-1 rounded-full bg-muted-light" />
+                        <span className="font-medium text-primary">{route.mode}</span>
+                      </div>
+                    </div>
+                    <div className="hidden shrink-0 sm:block">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted transition-colors group-hover:border-primary group-hover:text-primary">
+                        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              ))}
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Offices card */}
+          <ScrollReveal variant="right">
+            <div className="card-elevated h-full p-6 sm:p-8">
+              <div className="flex items-center gap-3">
+                <div className="icon-glow">
+                  <Building2 className="h-5 w-5" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">Regional Offices</h3>
+              </div>
+              <p className="mt-3 text-sm leading-6 text-muted">
+                Our physical presence across East Africa and the Middle East means faster
+                response times and deeper local knowledge at every hub.
+              </p>
+
+              <div className="mt-8 grid grid-cols-2 gap-3">
+                {offices.map((office) => (
+                  <div
+                    key={office}
+                    className="card-soft flex items-center gap-2.5 p-3"
+                  >
+                    <MapPin className="h-4 w-4 shrink-0 text-primary" />
+                    <span className="text-sm font-medium text-foreground">{office}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </ScrollReveal>
         </div>

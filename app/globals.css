@@ -132,6 +132,15 @@ html { scroll-behavior: smooth; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
+/* New: subtle reveal keyframes */
+@keyframes revealCard { from { opacity: 0; transform: translateY(30px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes revealCardLeft { from { opacity: 0; transform: translateX(-30px) scale(0.97); } to { opacity: 1; transform: translateX(0) scale(1); } }
+@keyframes revealCardRight { from { opacity: 0; transform: translateX(30px) scale(0.97); } to { opacity: 1; transform: translateX(0) scale(1); } }
+@keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes scalePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+@keyframes iconBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+@keyframes borderDash { to { stroke-dashoffset: 0; } }
+
 /* ── Utility Animation Classes ── */
 .animate-fade-in-up { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 .animate-fade-in-down { animation: fadeInDown 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
@@ -146,78 +155,239 @@ html { scroll-behavior: smooth; }
 .animate-border-glow { animation: borderGlow 2.5s infinite; }
 .animate-pulse { animation: pulse 2.5s ease-in-out infinite; }
 
-/* ── Card Styles ── */
-.card {
+/* ── New Redesign Card & Element Styles ── */
+
+/* Premium card with gradient border */
+.card-premium {
+  position: relative;
   background: var(--background);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   box-shadow: var(--card-shadow);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.card:hover {
+.card-premium::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  padding: 1px;
+  background: linear-gradient(135deg, var(--primary-100), transparent 40%, var(--primary-50) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  opacity: 0.6;
+}
+.card-premium:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-4px);
+}
+.card-premium:hover::before {
+  opacity: 1;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light), var(--primary));
+  background-size: 200% 200%;
+  animation: gradientFlow 3s ease infinite;
+}
+
+/* Modern glass card */
+.card-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-glass:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-3px);
+  border-color: rgba(91, 184, 232, 0.3);
+}
+
+/* Elevation card with subtle shadow */
+.card-elevated {
+  background: var(--background);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--border-light);
+}
+.card-elevated:hover {
+  box-shadow: var(--shadow-elevated);
+  transform: translateY(-5px);
+  border-color: var(--primary-100);
+}
+
+/* Soft card with background tint */
+.card-soft {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid transparent;
+}
+.card-soft:hover {
+  background: var(--background);
   border-color: var(--primary-100);
   box-shadow: var(--card-shadow-hover);
   transform: translateY(-3px);
 }
 
-.card-lg {
-  border-radius: var(--radius-lg);
+/* Icon container styles */
+.icon-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--primary-50), var(--primary-100));
+  color: var(--primary-dark);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-premium:hover .icon-glow,
+.card-elevated:hover .icon-glow,
+.card-soft:hover .icon-glow {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 14px rgba(91, 184, 232, 0.35);
 }
 
-.card-flat {
-  background: var(--background);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.card-flat:hover {
-  border-color: var(--primary-100);
-  box-shadow: var(--card-shadow-hover);
-}
-
-/* ── Glass Morphism ── */
-.glass {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+.icon-accent {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.875rem;
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 4px 12px rgba(240, 155, 107, 0.3);
+  transition: all 0.3s ease;
 }
 
-.glass-strong {
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+/* Decorative dot pattern backgrounds */
+.dots-pattern {
+  background-image: radial-gradient(var(--primary-100) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.glass-hero {
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.dots-pattern-light {
+  background-image: radial-gradient(var(--primary-50) 1px, transparent 1px);
+  background-size: 20px 20px;
 }
 
-/* ── Section Dividers & Transitions ── */
-.section-transition {
+/* Gradient blob for decorative backgrounds */
+.blob-primary {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.12;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--primary), transparent 70%);
+}
+
+.blob-accent {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.1;
+  pointer-events: none;
+  background: radial-gradient(circle, var(--accent), transparent 70%);
+}
+
+/* Section decorative patterns */
+.section-dots {
   position: relative;
 }
-
-.section-transition::before {
+.section-dots::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  inset: 0;
+  background-image: radial-gradient(var(--primary-50) 0.75px, transparent 0.75px);
+  background-size: 32px 32px;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-/* Section connector curves (subtle wave transition between sections) */
-.section-curve-top {
+/* Section with top gradient curve */
+.section-wave-top {
   position: relative;
 }
+.section-wave-top::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, var(--surface), transparent);
+  pointer-events: none;
+}
 
-/* ── Section Background Patterns ── */
+/* Number badge for process steps */
+.number-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 4px 12px rgba(91, 184, 232, 0.3);
+}
+
+/* Tag chip */
+.tag-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--primary-50);
+  color: var(--primary-dark);
+  border: 1px solid var(--primary-100);
+  transition: all 0.2s ease;
+}
+.tag-chip:hover {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* Rating stars row */
+.stars-row {
+  display: flex;
+  gap: 2px;
+}
+.stars-row .star {
+  color: var(--accent);
+  fill: var(--accent);
+  width: 16px;
+  height: 16px;
+}
+
+/* Route line connector */
+.route-connector {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.route-connector::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--primary-100), transparent);
+}
+
+/* Section gradient backgrounds */
 .section-gradient-surface {
   background: linear-gradient(165deg, var(--surface) 0%, var(--background) 100%);
 }
@@ -282,3 +452,17 @@ html { scroll-behavior: smooth; }
 .stagger-children.revealed > *:nth-child(6) { transition-delay: 340ms; opacity: 1; transform: translateY(0); }
 .stagger-children.revealed > *:nth-child(7) { transition-delay: 400ms; opacity: 1; transform: translateY(0); }
 .stagger-children.revealed > *:nth-child(8) { transition-delay: 460ms; opacity: 1; transform: translateY(0); }
+
+/* New stagger - larger counts */
+.stagger-children-lg.revealed > *:nth-child(1) { transition-delay: 30ms; }
+.stagger-children-lg.revealed > *:nth-child(2) { transition-delay: 80ms; }
+.stagger-children-lg.revealed > *:nth-child(3) { transition-delay: 130ms; }
+.stagger-children-lg.revealed > *:nth-child(4) { transition-delay: 180ms; }
+.stagger-children-lg.revealed > *:nth-child(5) { transition-delay: 230ms; }
+.stagger-children-lg.revealed > *:nth-child(6) { transition-delay: 280ms; }
+.stagger-children-lg.revealed > *:nth-child(7) { transition-delay: 330ms; }
+.stagger-children-lg.revealed > *:nth-child(8) { transition-delay: 380ms; }
+.stagger-children-lg.revealed > *:nth-child(9) { transition-delay: 430ms; }
+.stagger-children-lg.revealed > *:nth-child(10) { transition-delay: 480ms; }
+.stagger-children-lg.revealed > *:nth-child(11) { transition-delay: 530ms; }
+.stagger-children-lg.revealed > *:nth-child(12) { transition-delay: 580ms; }
