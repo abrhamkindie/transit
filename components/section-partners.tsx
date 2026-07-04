@@ -14,17 +14,15 @@ const network = [
 
 export default function SectionPartners() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-surface to-white py-16 sm:py-20">
-      {/* Decorative blobs */}
-      <div className="blob-primary -left-32 top-0 h-96 w-96" />
-      <div className="blob-accent -right-32 bottom-0 h-80 w-80" />
-
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+    <section className="relative bg-surface py-16 sm:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[0.6fr_1.4fr] lg:items-center">
           <ScrollReveal variant="left">
             <div>
-              <span className="text-eyebrow">Operating Network</span>
-              <h2 className="mt-5 text-3xl font-semibold leading-tight text-foreground sm:text-4xl">
+              <span className="inline-block rounded-full border border-primary-100 bg-primary-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-primary-dark">
+                Operating Network
+              </span>
+              <h2 className="mt-5 text-3xl font-bold leading-tight text-foreground sm:text-4xl">
                 Connected infrastructure across every shipping touchpoint.
               </h2>
               <p className="mt-4 max-w-sm text-base leading-7 text-muted">
@@ -39,13 +37,10 @@ export default function SectionPartners() {
               {network.map((item) => (
                 <div
                   key={item.name}
-                  className="card-elevated group relative overflow-hidden p-4 sm:p-5"
+                  className="group rounded-2xl border border-border bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-100 hover:shadow-md sm:p-5"
                 >
-                  {/* Gradient accent bar */}
-                  <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-primary/40 via-primary to-primary/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
                   <div className="flex items-start gap-3">
-                    <div className="icon-glow shrink-0">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-dark transition-all duration-300 group-hover:bg-primary group-hover:text-white">
                       <item.icon className="h-5 w-5" />
                     </div>
                     <div className="min-w-0">

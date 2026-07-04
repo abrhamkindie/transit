@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     q: "How long does customs clearance take?",
-    a: "Standard clearance takes 24–48 hours depending on cargo type, inspection requirements, and the specific customs authority. We flag high-inspection-risk cargo early and prepare accordingly to minimize delays.",
+    a: "Standard clearance takes 24\u201348 hours depending on cargo type, inspection requirements, and the specific customs authority. We flag high-inspection-risk cargo early and prepare accordingly to minimize delays.",
   },
   {
     q: "What is T1/T2/TIR transit documentation?",
@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     q: "Do you handle both import and export clearance?",
-    a: "Yes — we handle full import and export customs clearance for all types of goods, including regulated, hazardous, and high-value cargo across all major East African trade corridors.",
+    a: "Yes \u2014 we handle full import and export customs clearance for all types of goods, including regulated, hazardous, and high-value cargo across all major East African trade corridors.",
   },
   {
     q: "How do I track my shipment?",
@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: "What regions do you cover?",
-    a: "We primarily serve East Africa with a strong presence in Ethiopia, Djibouti, Kenya, Sudan, and Somalia — with connected partner networks covering the Middle East, Europe, and Asia.",
+    a: "We primarily serve East Africa with a strong presence in Ethiopia, Djibouti, Kenya, Sudan, and Somalia \u2014 with connected partner networks covering the Middle East, Europe, and Asia.",
   },
 ];
 
@@ -36,17 +36,15 @@ export default function SectionFaq() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section className="relative overflow-hidden bg-surface py-20 sm:py-24" id="faq">
-      {/* Decorative elements */}
-      <div className="dots-pattern-light absolute inset-0 opacity-30" />
-      <div className="blob-primary -left-40 top-1/2 h-80 w-80" />
-
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+    <section className="bg-surface py-20 sm:py-24" id="faq">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr]">
           <ScrollReveal variant="left">
             <div className="lg:sticky lg:top-28">
-              <span className="text-eyebrow">FAQ</span>
-              <h2 className="mt-5 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
+              <span className="inline-block rounded-full border border-primary-100 bg-primary-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-primary-dark">
+                FAQ
+              </span>
+              <h2 className="mt-5 text-4xl font-bold leading-tight text-foreground sm:text-5xl">
                 Clear answers before your shipment moves.
               </h2>
               <p className="mt-5 max-w-sm text-base leading-7 text-muted">
@@ -68,7 +66,11 @@ export default function SectionFaq() {
               {faqs.map((faq, index) => (
                 <div
                   key={faq.q}
-                  className="card-elevated overflow-hidden transition-all duration-300"
+                  className={`overflow-hidden rounded-2xl border bg-white transition-all duration-300 ${
+                    open === index
+                      ? "border-primary-100 shadow-md"
+                      : "border-border shadow-sm"
+                  }`}
                 >
                   <button
                     onClick={() => setOpen(open === index ? null : index)}

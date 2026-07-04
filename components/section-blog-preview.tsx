@@ -37,22 +37,21 @@ const articles = [
 
 export default function SectionBlogPreview() {
   return (
-    <section className="relative overflow-hidden bg-white py-20 sm:py-24">
-      {/* Decorative background */}
-      <div className="dots-pattern-light absolute inset-0 opacity-20" />
-
-      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
+    <section className="bg-white py-20 sm:py-24">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <ScrollReveal>
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div className="max-w-2xl">
-              <span className="text-eyebrow">Insights</span>
-              <h2 className="mt-5 text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
+              <span className="inline-block rounded-full border border-primary-100 bg-primary-50 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-primary-dark">
+                Insights
+              </span>
+              <h2 className="mt-5 text-4xl font-bold leading-tight text-foreground sm:text-5xl">
                 Practical guidance for customs and logistics teams.
               </h2>
             </div>
             <Link
               href="/blog"
-              className="inline-flex h-11 w-fit shrink-0 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition-all duration-200 hover:bg-primary-dark hover:shadow-xl hover:shadow-primary/30 active:scale-95"
+              className="inline-flex h-11 w-fit shrink-0 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition-all duration-200 hover:bg-primary-dark hover:shadow-xl active:scale-95"
             >
               View Articles
               <ArrowRight className="h-4 w-4" />
@@ -61,29 +60,24 @@ export default function SectionBlogPreview() {
         </ScrollReveal>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article, i) => (
+          {articles.map((article) => (
             <ScrollReveal key={article.title} variant="up" threshold={0.1}>
               <Link
                 href={article.href}
-                className="card-elevated group block overflow-hidden"
+                className="group block overflow-hidden rounded-2xl border border-border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-100 hover:shadow-lg"
               >
-                {/* Image with skeleton loading */}
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <ImageWithSkeleton
                     src={article.image}
                     alt={article.title}
-                    className="h-full w-full object-cover transition-all duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     wrapperClassName="absolute inset-0"
                   />
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-                  {/* Category badge */}
                   <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-xs font-semibold text-foreground backdrop-blur-sm">
                     {article.category}
                   </span>
                 </div>
 
-                {/* Content */}
                 <div className="p-5">
                   <div className="flex items-center gap-3 text-xs text-muted">
                     <span className="flex items-center gap-1.5">
@@ -95,14 +89,14 @@ export default function SectionBlogPreview() {
                       {article.readTime}
                     </span>
                   </div>
-                  <h3 className="mt-3 text-lg font-semibold leading-snug text-foreground transition-colors duration-200 group-hover:text-primary">
+                  <h3 className="mt-3 text-lg font-bold leading-snug text-foreground transition-colors duration-200 group-hover:text-primary">
                     {article.title}
                   </h3>
                   <p className="mt-2 text-sm leading-6 text-muted">{article.excerpt}</p>
 
-                  <div className="mt-5 flex items-center gap-2 text-sm font-semibold text-primary">
+                  <div className="mt-5 flex items-center gap-2 text-sm font-semibold text-primary transition-all duration-300 group-hover:gap-3">
                     Read article
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                    <ArrowRight className="h-3.5 w-3.5" />
                   </div>
                 </div>
               </Link>
