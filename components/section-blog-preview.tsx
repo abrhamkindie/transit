@@ -34,8 +34,6 @@ const articles = [
   },
 ];
 
-const [feature, ...list] = articles;
-
 export default function SectionBlogPreview() {
   return (
     <section className="bg-white py-20 sm:py-24">
@@ -61,83 +59,62 @@ export default function SectionBlogPreview() {
           </div>
         </ScrollReveal>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          {/* Featured article */}
-          <ScrollReveal variant="left">
-            <Link
-              href={feature.href}
-              className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-100 hover:shadow-xl"
-            >
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <ImageWithSkeleton
-                  src={feature.image}
-                  alt={feature.title}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  wrapperClassName="absolute inset-0"
-                />
-                <span className="absolute left-4 top-4 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-white shadow-lg">
-                  {feature.category}
-                </span>
-              </div>
-              <div className="flex flex-1 flex-col p-6 sm:p-7">
-                <div className="flex items-center gap-3 text-xs text-muted">
-                  <span className="flex items-center gap-1.5">
-                    <CalendarDays className="h-3.5 w-3.5" />
-                    {feature.date}
-                  </span>
-                  <span className="flex items-center gap-1.5">
-                    <Clock className="h-3.5 w-3.5" />
-                    {feature.readTime}
-                  </span>
-                </div>
-                <h3 className="mt-3 text-2xl font-bold leading-snug text-foreground transition-colors duration-200 group-hover:text-primary">
-                  {feature.title}
-                </h3>
-                <p className="mt-3 flex-1 text-sm leading-6 text-muted">{feature.excerpt}</p>
-                <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary transition-all duration-300 group-hover:gap-3">
-                  Read article
-                  <ArrowRight className="h-4 w-4" />
-                </div>
-              </div>
-            </Link>
-          </ScrollReveal>
+        {/* Editorial index ledger */}
+        <div className="mt-12 border-b border-border">
+          {articles.map((article, i) => (
+            <ScrollReveal key={article.title} variant="up" threshold={0.05}>
+              <Link
+                href={article.href}
+                className="group relative grid grid-cols-[auto_1fr_auto] items-center gap-4 border-t border-border py-6 transition-colors duration-300 hover:bg-primary-50/40 sm:gap-8 sm:py-8"
+              >
+                {/* animated left accent */}
+                <span className="absolute left-0 top-1/2 h-0 w-0.5 -translate-y-1/2 rounded-full bg-primary transition-all duration-300 group-hover:h-[70%]" />
 
-          {/* Secondary list */}
-          <div className="flex flex-col gap-6">
-            {list.map((article) => (
-              <ScrollReveal key={article.title} variant="right" threshold={0.1} className="flex-1">
-                <Link
-                  href={article.href}
-                  className="group flex h-full gap-5 overflow-hidden rounded-3xl border border-border bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-100 hover:shadow-lg"
-                >
-                  <div className="relative aspect-square w-32 shrink-0 overflow-hidden rounded-2xl sm:w-40">
+                {/* ghost index */}
+                <span className="pl-3 text-3xl font-bold tabular-nums text-border transition-colors duration-300 group-hover:text-primary sm:pl-5 sm:text-5xl">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                {/* content */}
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-3 text-xs text-muted">
+                    <span className="rounded-full bg-primary-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-primary-dark">
+                      {article.category}
+                    </span>
+                    <span className="hidden items-center gap-1.5 sm:flex">
+                      <CalendarDays className="h-3.5 w-3.5" />
+                      {article.date}
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="h-3.5 w-3.5" />
+                      {article.readTime}
+                    </span>
+                  </div>
+                  <h3 className="mt-2 text-lg font-bold leading-snug text-foreground transition-colors duration-200 group-hover:text-primary sm:text-2xl">
+                    {article.title}
+                  </h3>
+                  <p className="mt-1.5 hidden max-w-xl text-sm leading-6 text-muted sm:line-clamp-1 md:block">
+                    {article.excerpt}
+                  </p>
+                </div>
+
+                {/* thumbnail + arrow */}
+                <div className="flex items-center gap-4 sm:gap-6">
+                  <div className="relative hidden h-20 w-28 shrink-0 overflow-hidden rounded-2xl sm:block">
                     <ImageWithSkeleton
                       src={article.image}
                       alt={article.title}
-                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                       wrapperClassName="absolute inset-0"
                     />
                   </div>
-                  <div className="flex min-w-0 flex-1 flex-col justify-center py-1">
-                    <span className="text-xs font-bold uppercase tracking-wider text-primary-dark">
-                      {article.category}
-                    </span>
-                    <h3 className="mt-2 text-lg font-bold leading-snug text-foreground transition-colors duration-200 group-hover:text-primary">
-                      {article.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted">{article.excerpt}</p>
-                    <div className="mt-3 flex items-center gap-3 text-xs text-muted">
-                      <span className="flex items-center gap-1.5">
-                        <Clock className="h-3.5 w-3.5" />
-                        {article.readTime}
-                      </span>
-                      <ArrowUpRight className="h-4 w-4 text-primary transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                    </div>
-                  </div>
-                </Link>
-              </ScrollReveal>
-            ))}
-          </div>
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border text-muted transition-all duration-300 group-hover:border-primary group-hover:bg-primary group-hover:text-white">
+                    <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                  </span>
+                </div>
+              </Link>
+            </ScrollReveal>
+          ))}
         </div>
       </div>
     </section>

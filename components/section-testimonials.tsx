@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { Quote, Star } from "lucide-react";
 import ScrollReveal from "./scroll-reveal";
 
@@ -41,66 +44,115 @@ function initials(name: string) {
 }
 
 export default function SectionTestimonials() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(() => setActive((a) => (a + 1) % testimonials.length), 5000);
+    return () => clearInterval(id);
+  }, [paused]);
+
+  const t = testimonials[active];
+
   return (
     <section className="bg-surface py-20 sm:py-24">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6">
+        {/* Centered header */}
         <ScrollReveal>
-          <div className="flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between">
-            <div className="max-w-xl">
-              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-primary-dark">
-                <span className="h-px w-8 bg-primary" />
-                Client Trust
+          <div className="text-center">
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-primary-dark">
+              <span className="h-px w-8 bg-primary" />
+              Client Trust
+              <span className="h-px w-8 bg-primary" />
+            </span>
+            <h2 className="mt-4 text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+              Trusted by teams that ship every week.
+            </h2>
+
+            {/* inline trust stats */}
+            <div className="mt-6 flex items-center justify-center gap-3 sm:gap-4">
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm shadow-sm">
+                <span className="text-base font-bold text-foreground">500+</span>
+                <span className="text-muted">businesses served</span>
               </span>
-              <h2 className="mt-4 text-4xl font-bold leading-tight text-foreground sm:text-5xl">
-                Built for teams that need communication first.
-              </h2>
-            </div>
-            <div className="flex gap-4">
-              <div className="rounded-2xl border border-border bg-white px-5 py-4 text-center shadow-sm">
-                <div className="text-3xl font-bold text-foreground">500+</div>
-                <p className="mt-1 text-xs text-muted">businesses served</p>
-              </div>
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-border bg-white px-5 py-4 text-center shadow-sm">
-                <div className="text-3xl font-bold text-foreground">5.0</div>
-                <div className="mt-1 flex gap-0.5">
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-white px-4 py-2 text-sm shadow-sm">
+                <span className="text-base font-bold text-foreground">5.0</span>
+                <span className="flex gap-0.5">
                   {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-3 w-3 fill-accent text-accent" />
+                    <Star key={i} className="h-3.5 w-3.5 fill-accent text-accent" />
                   ))}
-                </div>
+                </span>
+              </span>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Spotlight quote card */}
+        <ScrollReveal variant="scale">
+          <div
+            className="relative mt-12 overflow-hidden rounded-3xl border border-primary-100 bg-white px-6 py-12 text-center shadow-[var(--shadow-elevated)] sm:px-14 sm:py-14"
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
+            {/* accent top line */}
+            <span className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-primary-light to-accent" />
+            {/* faint watermark */}
+            <Quote className="pointer-events-none absolute -right-4 -top-2 h-40 w-40 text-primary-50" />
+
+            <div key={active} style={{ animation: "fadeInUp 0.5s ease" }} className="relative mx-auto max-w-2xl">
+              <div className="flex justify-center gap-1">
+                {Array.from({ length: t.rating }).map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-accent text-accent" />
+                ))}
+              </div>
+              <blockquote className="mt-6 text-xl font-medium leading-relaxed text-foreground sm:text-[1.6rem] sm:leading-relaxed">
+                &ldquo;{t.content}&rdquo;
+              </blockquote>
+              <div className="mt-8">
+                <p className="text-base font-bold text-foreground">{t.name}</p>
+                <p className="mt-1 text-sm text-muted">{t.role}</p>
               </div>
             </div>
           </div>
         </ScrollReveal>
 
-        {/* Wall of testimonials */}
-        <div className="mt-12 grid gap-5 sm:grid-cols-2">
-          {testimonials.map((t) => (
-            <ScrollReveal key={t.name} variant="up" threshold={0.05}>
-              <figure className="group relative flex h-full flex-col rounded-3xl border border-border bg-white p-7 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary-100 hover:shadow-xl hover:shadow-primary/5 sm:p-8">
-                <Quote className="h-9 w-9 text-primary-100 transition-colors duration-300 group-hover:text-primary/40" />
-                <div className="mt-4 flex gap-1">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="h-4 w-4 fill-accent text-accent" />
-                  ))}
-                </div>
-                <blockquote className="mt-4 flex-1">
-                  <p className="text-base leading-7 text-foreground/90 sm:text-lg">
-                    &ldquo;{t.content}&rdquo;
-                  </p>
-                </blockquote>
-                <figcaption className="mt-7 flex items-center gap-3 border-t border-border pt-6">
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary to-primary-dark text-sm font-bold text-white shadow-md shadow-primary/20">
-                    {initials(t.name)}
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold text-foreground">{t.name}</p>
-                    <p className="mt-0.5 text-xs text-muted">{t.role}</p>
-                  </div>
-                </figcaption>
-              </figure>
-            </ScrollReveal>
-          ))}
-        </div>
+        {/* Avatar filmstrip selector */}
+        <ScrollReveal variant="up">
+          <div className="mt-8 flex items-center justify-center gap-4 sm:gap-6">
+            {testimonials.map((item, i) => {
+              const on = i === active;
+              return (
+                <button
+                  key={item.name}
+                  type="button"
+                  aria-label={`Show testimonial from ${item.name}`}
+                  onClick={() => setActive(i)}
+                  className={`group flex flex-col items-center gap-2 transition-all duration-300 ${
+                    on ? "" : "opacity-60 hover:opacity-100"
+                  }`}
+                >
+                  <span
+                    className={`flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold transition-all duration-300 sm:h-14 sm:w-14 ${
+                      on
+                        ? "scale-110 bg-gradient-to-br from-primary to-primary-dark text-white shadow-lg shadow-primary/30 ring-2 ring-primary ring-offset-2 ring-offset-surface"
+                        : "bg-primary-50 text-primary-dark group-hover:bg-primary-100"
+                    }`}
+                  >
+                    {initials(item.name)}
+                  </span>
+                  <span
+                    className={`hidden text-xs font-semibold transition-colors duration-300 sm:block ${
+                      on ? "text-foreground" : "text-muted"
+                    }`}
+                  >
+                    {item.name.split(" ")[0]}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
