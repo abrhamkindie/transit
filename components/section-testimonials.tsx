@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Star } from "lucide-react";
 import ScrollReveal from "./scroll-reveal";
 
@@ -39,83 +39,79 @@ const testimonials = [
   },
 ];
 
-const n = testimonials.length;
+const N = testimonials.length;
+const SLOT = 104; // px height of each carousel row
+const VISIBLE = 3;
+// triple the list so the carousel always has neighbours above and below
+const track = [...testimonials, ...testimonials, ...testimonials];
 
-function MiniRow({
-  t,
-  onClick,
-}: {
-  t: (typeof testimonials)[number];
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={`Show review from ${t.name}`}
-      className="group relative z-10 flex items-center gap-3 opacity-60 transition-opacity duration-300 hover:opacity-100"
-    >
-      <img
-        src={t.photo}
-        alt={t.name}
-        loading="lazy"
-        className="h-11 w-11 shrink-0 rounded-full object-cover grayscale ring-2 ring-white shadow-md transition-transform duration-300 group-hover:scale-105"
-      />
-      <div className="text-left">
-        <p className="text-sm font-bold text-foreground">{t.name}</p>
-        <p className="mt-0.5 flex items-center gap-1 text-[11px] text-muted">
-          <Star className="h-3 w-3 fill-primary text-primary" />
-          <span className="font-semibold text-primary-dark">{t.rating}</span>
-          <span>· Verified client</span>
-        </p>
-      </div>
-    </button>
-  );
-}
+const fadeMask = {
+  WebkitMaskImage: "linear-gradient(to bottom, transparent, black 22%, black 78%, transparent)",
+  maskImage: "linear-gradient(to bottom, transparent, black 22%, black 78%, transparent)",
+} as const;
 
 export default function SectionTestimonials() {
-  const [active, setActive] = useState(1);
+  const [index, setIndex] = useState(N + 1); // start centered on 2nd item, middle copy
+  const [anim, setAnim] = useState(true);
   const [paused, setPaused] = useState(false);
+  const animRef = useRef(true);
+  animRef.current = anim;
 
+  const active = ((index % N) + N) % N;
+
+  // auto-advance
   useEffect(() => {
     if (paused) return;
-    const id = setInterval(() => setActive((a) => (a + 1) % n), 4500);
+    const id = setInterval(() => setIndex((i) => i + 1), 4500);
     return () => clearInterval(id);
   }, [paused]);
 
-  const prevIdx = (active - 1 + n) % n;
-  const nextIdx = (active + 1) % n;
+  // re-enable transition after a silent recenter
+  useEffect(() => {
+    if (anim) return;
+    const id = setTimeout(() => setAnim(true), 30);
+    return () => clearTimeout(id);
+  }, [anim]);
+
+  const recenter = () => {
+    const target = active + N;
+    if (index !== target) {
+      setAnim(false);
+      setIndex(target);
+    }
+  };
+
   const t = testimonials[active];
+  // center the active row (position === index) within the VISIBLE-row window
+  const translateY = ((VISIBLE - 1) / 2 - index) * SLOT;
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-surface via-white to-surface-alt py-20 sm:py-28">
-      {/* decorative brand quarter-circle */}
+      {/* soft brand glow (was a hard circle) */}
       <div
-        className="pointer-events-none absolute top-1/2 -left-52 h-[560px] w-[560px] -translate-y-1/2 rounded-full bg-gradient-to-br from-primary-light via-primary to-primary-dark sm:-left-40"
+        className="pointer-events-none absolute -left-24 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-gradient-to-br from-primary-light to-primary opacity-25 blur-[90px]"
         aria-hidden
       />
 
-      <div className="relative mx-auto max-w-5xl px-4 sm:px-6">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <ScrollReveal variant="scale">
           <div
-            className="relative overflow-hidden rounded-3xl bg-white p-8 shadow-[var(--shadow-elevated)] sm:p-14"
+            className="relative overflow-hidden rounded-3xl border border-border-light bg-white p-8 shadow-[var(--shadow-elevated)] sm:p-14"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
             {/* header */}
             <span className="block h-1 w-10 rounded-full bg-primary" />
-            <h2 className="mt-4 text-2xl font-bold text-foreground sm:text-[1.75rem]">
-              Customer Reviews
-            </h2>
+            <h2 className="mt-4 text-2xl font-bold text-foreground sm:text-[1.75rem]">Customer Reviews</h2>
 
             <div className="mt-10 grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
-              {/* Left: rotating avatar carousel on an arc */}
-              <div className="relative flex min-h-[320px] flex-col justify-center gap-8">
+              {/* Left: scrolling avatar carousel */}
+              <div className="relative" style={{ height: SLOT * VISIBLE }}>
                 {/* curved connector */}
                 <svg
                   viewBox="0 0 120 320"
                   preserveAspectRatio="none"
-                  className="pointer-events-none absolute left-2 top-0 h-full w-32"
+                  className="pointer-events-none absolute left-2 top-0 z-0 h-full w-32"
                   aria-hidden
                 >
                   <path
@@ -128,31 +124,66 @@ export default function SectionTestimonials() {
                   />
                 </svg>
 
-                <MiniRow t={testimonials[prevIdx]} onClick={() => setActive(prevIdx)} />
-
-                {/* active */}
-                <div
-                  key={active}
-                  style={{ animation: "fadeInUp 0.45s ease" }}
-                  className="relative z-10 flex items-center gap-4 sm:pl-8"
-                >
-                  <img
-                    src={t.photo}
-                    alt={t.name}
-                    loading="lazy"
-                    className="h-20 w-20 shrink-0 rounded-full object-cover grayscale ring-4 ring-white shadow-xl sm:h-24 sm:w-24"
-                  />
-                  <div>
-                    <p className="text-xl font-bold text-foreground sm:text-2xl">{t.name}</p>
-                    <p className="mt-1.5 flex items-center gap-1.5 text-sm">
-                      <Star className="h-4 w-4 fill-primary text-primary" />
-                      <span className="font-bold text-primary-dark">{t.rating}</span>
-                      <span className="text-muted">· Verified client</span>
-                    </p>
+                <div className="relative h-full overflow-hidden" style={fadeMask}>
+                  <div
+                    className="absolute inset-x-0 top-0"
+                    style={{
+                      transform: `translateY(${translateY}px)`,
+                      transition: anim ? "transform 550ms cubic-bezier(0.22, 1, 0.36, 1)" : "none",
+                    }}
+                    onTransitionEnd={recenter}
+                  >
+                    {track.map((item, p) => {
+                      const dist = Math.min(Math.abs(p - index), 3);
+                      const scale = dist === 0 ? 1 : dist === 1 ? 0.6 : dist === 2 ? 0.42 : 0.3;
+                      const opacity = dist === 0 ? 1 : dist === 1 ? 0.6 : dist === 2 ? 0.28 : 0;
+                      const x = Math.max(0, (2 - dist) / 2) * 28; // arc bulge — center sits furthest right
+                      const on = dist === 0;
+                      return (
+                        <button
+                          key={p}
+                          type="button"
+                          onClick={() => {
+                            setAnim(true);
+                            setIndex(p);
+                          }}
+                          aria-label={`Show review from ${item.name}`}
+                          className="flex w-full items-center text-left"
+                          style={{ height: SLOT }}
+                        >
+                          <div
+                            className="flex items-center gap-4"
+                            style={{
+                              transform: `translateX(${x}px) scale(${scale})`,
+                              transformOrigin: "left center",
+                              opacity,
+                              transition: anim
+                                ? "transform 550ms cubic-bezier(0.22, 1, 0.36, 1), opacity 550ms ease"
+                                : "none",
+                            }}
+                          >
+                            <img
+                              src={item.photo}
+                              alt={item.name}
+                              loading="lazy"
+                              className={`h-20 w-20 shrink-0 rounded-full object-cover grayscale ring-white shadow-md ${
+                                on ? "ring-4 shadow-xl" : "ring-2"
+                              }`}
+                            />
+                            <div className="whitespace-nowrap">
+                              <p className="text-2xl font-bold text-foreground">{item.name}</p>
+                              <p className="mt-1 flex items-center gap-1.5 text-sm">
+                                <Star className="h-4 w-4 fill-primary text-primary" />
+                                <span className="font-semibold text-primary-dark">{item.rating}</span>
+                                <span className="text-muted">· Verified client</span>
+                              </p>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-
-                <MiniRow t={testimonials[nextIdx]} onClick={() => setActive(nextIdx)} />
               </div>
 
               {/* Right: quote */}
@@ -175,7 +206,10 @@ export default function SectionTestimonials() {
                       key={item.name}
                       type="button"
                       aria-label={`Show review ${i + 1}`}
-                      onClick={() => setActive(i)}
+                      onClick={() => {
+                        setAnim(true);
+                        setIndex(N + i);
+                      }}
                       className={`h-1.5 rounded-full transition-all duration-300 ${
                         i === active ? "w-7 bg-primary" : "w-3 bg-border hover:bg-primary-light"
                       }`}
