@@ -125,6 +125,8 @@ html { scroll-behavior: smooth; }
 @keyframes revealCardRight { from { opacity: 0; transform: translateX(30px) scale(0.97); } to { opacity: 1; transform: translateX(0) scale(1); } }
 @keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 @keyframes scalePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+@keyframes dashFlow { to { stroke-dashoffset: -1000; } }
+@keyframes hubPing { 0% { transform: scale(1); opacity: 0.55; } 70%, 100% { transform: scale(2.6); opacity: 0; } }
 @keyframes iconBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
 @keyframes borderDash { to { stroke-dashoffset: 0; } }
 

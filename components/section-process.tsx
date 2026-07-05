@@ -33,65 +33,68 @@ const steps = [
 
 export default function SectionProcess() {
   return (
-    <section className="bg-foreground py-20 text-white sm:py-24" id="how-it-works">
+    <section className="bg-white py-20 sm:py-24" id="how-it-works">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
-          <ScrollReveal variant="left">
-            <div className="lg:sticky lg:top-28">
-              <span className="inline-block rounded-full border border-white/15 bg-white/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-primary-light">
-                How It Works
-              </span>
-              <h2 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl">
-                A controlled sequence from paperwork to handoff.
-              </h2>
-              <p className="mt-5 max-w-md text-base leading-7 text-white/60">
-                Every shipment follows a defined workflow with clear checkpoints,
-                a single accountable owner, and visible status at each stage.
-              </p>
+        <ScrollReveal>
+          <div className="mx-auto max-w-2xl text-center">
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-primary-dark">
+              <span className="h-px w-8 bg-primary" />
+              How It Works
+              <span className="h-px w-8 bg-primary" />
+            </span>
+            <h2 className="mt-4 text-4xl font-bold leading-tight text-foreground sm:text-5xl">
+              A controlled sequence from paperwork to handoff.
+            </h2>
+            <p className="mt-5 text-base leading-7 text-muted">
+              Every shipment follows a defined workflow with clear checkpoints, a single accountable
+              owner, and visible status at each stage.
+            </p>
+          </div>
+        </ScrollReveal>
 
-              <div className="mt-10 flex items-center gap-6 border-t border-white/10 pt-8">
-                <div>
-                  <div className="text-3xl font-bold text-white">5</div>
-                  <p className="mt-1 text-xs text-white/50">Process stages</p>
-                </div>
-                <div className="h-10 w-px bg-white/10" />
-                <div>
-                  <div className="text-3xl font-bold text-white">24-48h</div>
-                  <p className="mt-1 text-xs text-white/50">Avg. clearance time</p>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
+        {/* Horizontal connected stepper */}
+        <div className="relative mt-16">
+          {/* connector line (desktop) */}
+          <div className="absolute left-0 right-0 top-7 hidden h-0.5 bg-gradient-to-r from-primary/10 via-primary/40 to-primary/10 lg:block" />
 
-          <div className="relative">
-            {/* Connecting line */}
-            <div className="absolute left-5 top-0 bottom-0 w-px bg-gradient-to-b from-primary/40 via-primary/20 to-transparent max-lg:hidden" />
-
-            <div className="space-y-5">
-              {steps.map((step, index) => (
-                <ScrollReveal key={step.title} variant="right" threshold={0.1}>
-                  <div className="group relative flex items-start gap-5 max-lg:gap-4">
-                    {/* Number badge */}
-                    <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(91,184,232,0.4)]">
+          <div className="grid gap-y-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-x-4">
+            {steps.map((step, index) => (
+              <ScrollReveal key={step.title} variant="up" threshold={0.1}>
+                <div className="group relative flex flex-col items-center px-2 text-center lg:items-start lg:text-left">
+                  {/* node */}
+                  <div className="relative z-10 mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-white text-primary-dark shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary group-hover:bg-primary group-hover:text-white group-hover:shadow-lg group-hover:shadow-primary/25">
+                    <step.icon className="h-6 w-6" />
+                    <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-white ring-4 ring-white">
                       {index + 1}
-                    </div>
-
-                    {/* Card */}
-                    <div className="min-w-0 flex-1 rounded-xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-white/10 sm:p-6">
-                      <div className="flex items-center gap-3">
-                        <step.icon className="h-5 w-5 text-primary-light" />
-                        <h3 className="text-lg font-semibold text-white sm:text-xl">{step.title}</h3>
-                      </div>
-                      <p className="mt-3 max-w-2xl text-sm leading-6 text-white/60">
-                        {step.desc}
-                      </p>
-                    </div>
+                    </span>
                   </div>
-                </ScrollReveal>
-              ))}
-            </div>
+                  <h3 className="text-base font-bold text-foreground">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted">{step.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
+
+        {/* stat strip */}
+        <ScrollReveal variant="up">
+          <div className="mt-16 flex flex-col items-center justify-center gap-8 rounded-2xl border border-border bg-surface px-8 py-8 sm:flex-row sm:gap-16">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-foreground">5</div>
+              <p className="mt-1 text-sm text-muted">Process stages</p>
+            </div>
+            <div className="hidden h-12 w-px bg-border sm:block" />
+            <div className="text-center">
+              <div className="text-3xl font-bold text-foreground">24–48h</div>
+              <p className="mt-1 text-sm text-muted">Avg. clearance time</p>
+            </div>
+            <div className="hidden h-12 w-px bg-border sm:block" />
+            <div className="text-center">
+              <div className="text-3xl font-bold text-foreground">1</div>
+              <p className="mt-1 text-sm text-muted">Accountable owner</p>
+            </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );
